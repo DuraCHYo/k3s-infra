@@ -1,0 +1,5 @@
+- name: play install k3s
+  become: true
+  hosts: all
+  tasks:
+    - name: install on node {{ ansible_hostname }}
