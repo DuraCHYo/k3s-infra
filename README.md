@@ -1,0 +1,1 @@
+ansible-playbook setup-vm.yml -i ../inv/inventory.yml -u admin -vv -e 'rsa_key_decrypt_pass=.....'
