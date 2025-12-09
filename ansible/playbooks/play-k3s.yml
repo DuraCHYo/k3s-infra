@@ -2,4 +2,7 @@
   become: true
   hosts: all
   tasks:
-    - name: install on node {{ ansible_hostname }}
+    - name: install k3s on node {{ ansible_hostname }}
+      shell: curl -sfL https://get.k3s.io | sh -s - server --disable=traefik
+      when:
+        - install_k3s

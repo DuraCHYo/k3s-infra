@@ -1,0 +1,18 @@
+- name: play infra apps
+  become: true
+  hosts: all
+  vars_files:
+    - ../defaults/main.yml
+  tasks:
+    - include_tasks: add-charts-repos.yml
+    - name: play-argocd
+      kubernetes.core.helm:
+        name: argocd
+        chart_ref: argo/argo-cd
+        release_namespace: argo-cd
+        kubeconfig: /etc/rancher/k3s/k3s.yaml
+        create_namespace: true
+        values: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/../files/values.argocd.yml') | from_yaml }}"
+      when:
+        - install_argocd
+        - install_k3s
