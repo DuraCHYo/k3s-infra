@@ -525,20 +525,20 @@ configs:
     annotations: {}
 
     # -- Plugin yaml files to be added to argocd-cmp-cm
-    plugins:
-      argocd-plugin-kustomize:
-        discover:
-          find:
-            command:
-              - find
-              - "."
-              - -name
-              - kustomization.yml
-        generate:
-          command:
-            - /bin/sh
-            - -c
-            - "kustomize build --enable-helm ."
+    plugins: {}
+#      argocd-plugin-kustomize:
+#        discover:
+#          find:
+#            command:
+#              - find
+#              - "."
+#              - -name
+#              - kustomization.yml
+#        generate:
+#          command:
+#            - /bin/sh
+#            - -c
+#            - "kustomize build --enable-helm ."
 
   # -- Provide one or multiple [external cluster credentials]
   # @default -- `{}` (See [values.yaml])
@@ -689,26 +689,26 @@ configs:
 
 # -- Array of extra K8s manifests to deploy
 ## Note: Supports use of custom Helm templates
-extraObjects:
-  - apiVersion: "argoproj.io/v1alpha1"
-    kind: "Application"
-    metadata:
-      annotations:
-        helm.sh/hook: "post-install,post-upgrade"
-      name: "app-for-apps"
-      namespace: "argo-cd"
-    spec:
-      destination:
-        namespace: "argo-cd"
-        server: "https://kubernetes.default.svc"
-      project: "default"
-      revisionHistoryLimit: 3
-      source:
-        directory:
-          recurse: true
-        path: "kustomize/apps/"
-        repoURL: "https://github.com/DuraCHYo/k3s-infra.git"
-        targetRevision: "master"
+extraObjects: []
+#  - apiVersion: "argoproj.io/v1alpha1"
+#    kind: "Application"
+#    metadata:
+#      annotations:
+#        helm.sh/hook: "post-install,post-upgrade"
+#      name: "app-for-apps"
+#      namespace: "argo-cd"
+#    spec:
+#      destination:
+#        namespace: "argo-cd"
+#        server: "https://kubernetes.default.svc"
+#      project: "default"
+#      revisionHistoryLimit: 3
+#      source:
+#        directory:
+#          recurse: true
+#        path: "kustomize/apps/"
+#        repoURL: "https://github.com/DuraCHYo/k3s-infra.git"
+#        targetRevision: "master"
   # - apiVersion: secrets-store.csi.x-k8s.io/v1
   #   kind: SecretProviderClass
   #   metadata:
@@ -2569,36 +2569,36 @@ repoServer:
   # -- Additional containers to be added to the repo server pod
   ## Ref: https://argo-cd.readthedocs.io/en/stable/user-guide/config-management-plugins/
   ## Note: Supports use of custom Helm templates
-  extraContainers:
-    - name: "argocd-plugin-kustomize"
-      command: ["/var/run/argocd/argocd-cmp-server", "--logformat=json", "--loglevel=info"]
-      image: "quay.io/argoproj/argocd:v3.2.1"
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 999
-      volumeMounts:
-        - mountPath: "/home/argocd/cmp-server/config/plugin.yaml"
-          subPath: "argocd-plugin-kustomize.yaml"
-          name: "argocd-cmp-cm"
-        - mountPath: "/usr/local/bin/argocd-vault-plugin"
-          name: "custom-tools"
-          subPath: "argocd-vault-plugin"
-        - mountPath: "/home/argocd/cmp-server/plugins"
-          name: "plugins"
-        - mountPath: "/app/config/tls"
-          name: "tls-certs"
-        - mountPath: "/tmp"
-          name: "tmp"
-        - mountPath: "/var/run/argocd"
-          name: "var-files"
-  volumes:
-    - configMap:
-        name: "argocd-cmp-cm"
-      name: "argocd-cmp-cm"
-    - emptyDir: {}
-      name: "custom-tools"
-    - name: cmp-tmp
-      emptyDir: { }
+  extraContainers: []
+#    - name: "argocd-plugin-kustomize"
+#      command: ["/var/run/argocd/argocd-cmp-server", "--logformat=json", "--loglevel=info"]
+#      image: "quay.io/argoproj/argocd:v3.2.1"
+#      securityContext:
+#        runAsNonRoot: true
+#        runAsUser: 999
+#      volumeMounts:
+#        - mountPath: "/home/argocd/cmp-server/config/plugin.yaml"
+#          subPath: "argocd-plugin-kustomize.yaml"
+#          name: "argocd-cmp-cm"
+#        - mountPath: "/usr/local/bin/argocd-vault-plugin"
+#          name: "custom-tools"
+#          subPath: "argocd-vault-plugin"
+#        - mountPath: "/home/argocd/cmp-server/plugins"
+#          name: "plugins"
+#        - mountPath: "/app/config/tls"
+#          name: "tls-certs"
+#        - mountPath: "/tmp"
+#          name: "tmp"
+#        - mountPath: "/var/run/argocd"
+#          name: "var-files"
+  volumes: []
+#    - configMap:
+#        name: "argocd-cmp-cm"
+#      name: "argocd-cmp-cm"
+#    - emptyDir: {}
+#      name: "custom-tools"
+#    - name: cmp-tmp
+#      emptyDir: { }
 
   # -- Init containers to add to the repo server pods
   initContainers: []

@@ -11,8 +11,6 @@ spec:
   project: default
   revisionHistoryLimit: 3
   source:
-    plugin:
-      name: argocd-plugin-kustomize
     path: kustomize/traefik/
     repoURL: https://github.com/DuraCHYo/k3s-infra.git
     targetRevision: master
