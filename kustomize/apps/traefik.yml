@@ -13,7 +13,7 @@ spec:
   source:
     plugin:
       name: argocd-plugin-kustomize
-    path: kustomize/apps
+    path: kustomize/traefik/
     repoURL: https://github.com/DuraCHYo/k3s-infra.git
     targetRevision: master
 
