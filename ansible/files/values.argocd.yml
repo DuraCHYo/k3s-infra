@@ -533,7 +533,7 @@ configs:
               - find
               - "."
               - -name
-              - kustomization.yaml
+              - kustomization.yml
         generate:
           command:
             - /bin/sh
