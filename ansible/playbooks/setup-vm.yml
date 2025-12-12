@@ -1,45 +1,8 @@
-- name: setup vm
-  hosts: all
-  become: true
-  tasks:
-    - name: Make sure we have a 'wheel' group
-      group:
-        name: wheel
-        state: present
-    - name: Allow 'wheel' group to have passwordless sudo
-      lineinfile:
-        dest: /etc/sudoers
-        state: present
-        regexp: '^%wheel'
-        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
-    - name: create user with sudo
-      user:
-        name: admin
-        groups: wheel
-        append: yes
-        state: present
-        shell: /bin/bash
-        create_home: yes
-    - name: decrypt ansible-vault key
-      delegate_to: localhost
-      become: no
-      shell: echo "{{ rsa_key_decrypt_pass }}" | ansible-vault decrypt ../files/id_rsa.pub
-    - name: put pubkey to authorized_keys
-      authorized_key:
-        user: admin
-        key: "{{ item }}"
-      with_file:
-        - ../files/id_rsa.pub
-    - name: encrypt ansible-vault key
-      delegate_to: localhost
-      become: no
-      shell:  printf "{{ rsa_key_decrypt_pass }}\n{{ rsa_key_decrypt_pass }}\n" | ansible-vault encrypt ../files/id_rsa.pub
-    - name: upgrade packages
-      apt:
-        upgrade: safe
-        update_cache: yes
-    - name: install python3
-      apt:
-        name: python3
-        state: present
+- name: upgrade packages
+  apt:
+    upgrade: safe
+    update_cache: yes
+- name: install python3
+  apt:
+    name: python3
+    state: present

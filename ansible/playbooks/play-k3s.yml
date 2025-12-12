@@ -1,8 +1,22 @@
-- name: play install k3s
-  become: true
-  hosts: all
-  tasks:
-    - name: install k3s on node {{ ansible_hostname }}
-      shell: curl -sfL https://get.k3s.io | sh -s - server --disable=traefik
-      when:
-        - install_k3s
+- name: install k3s on node
+  shell: curl -sfL https://get.k3s.io | sh -s - server --disable=traefik
+  when: install_k3s
+  register: k3s_install
+
+- name: wait for k3s to be ready
+  wait_for:
+    path: /etc/rancher/k3s/k3s.yaml
+    state: present
+    timeout: 60
+  when: install_k3s
+
+- name: wait for k3s api to respond
+  shell: |
+    timeout 60 sh -c 'until k3s kubectl get nodes 2>/dev/null; do sleep 5; done'
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: install_k3s
+  register: k3s_api_check
+  retries: 12
+  delay: 5
+  until: k3s_api_check.rc == 0

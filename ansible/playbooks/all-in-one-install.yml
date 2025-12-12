@@ -1,6 +1,8 @@
 - name: all-in-one installation
-  hosts: all
+  hosts: vps_pizza
   become: true
+  vars_files:
+    - ../defaults/main.yml
   tasks:
     - include_tasks: setup-vm.yml
     - include_tasks: play-k3s.yml

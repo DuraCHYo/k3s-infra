@@ -1,37 +1,59 @@
-- name: play infra apps
-  become: true
-  hosts: all
-  vars_files:
-    - ../defaults/main.yml
-  handlers:
-    - name: Include handlers for tasks
-      include_tasks: ../handlers/main.yml
-  tasks:
-    - name: download helm3
-      get_url:
-        url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-        dest: /tmp/helm-3.sh
-        mode: "0700"
-      register: helm_download_result
-      notify: execute_helm_sh
-      when:
-        - install_argocd
-    - name: add argocd repo
-      kubernetes.core.helm_repository:
-        name: argo
-        repo_url: https://argoproj.github.io/argo-helm
-      when:
-        - install_argocd
-        - install_k3s
-    - name: play-argocd
-      kubernetes.core.helm:
-        name: argocd
-        chart_ref: argo/argo-cd
-        release_namespace: argo-cd
-        kubeconfig: /etc/rancher/k3s/k3s.yaml
-        create_namespace: true
-        values: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/../files/values.argocd.yaml') | from_yaml }}"
-      when:
-        - install_argocd
-        - install_k3s
-        - helm_download_result
+- name: check if helm already exists
+  stat:
+    path: /usr/local/bin/helm
+  register: helm_binary
+  when: install_argocd
+
+- name: download helm3 installer
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    dest: /tmp/helm-3.sh
+    mode: "0700"
+  when:
+    - install_argocd
+    - not helm_binary.stat.exists
+
+- name: execute helm installation
+  shell: /tmp/helm-3.sh
+  when:
+    - install_argocd
+    - not helm_binary.stat.exists
+
+- name: add argocd repo
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: https://argoproj.github.io/argo-helm
+  when:
+    - install_argocd
+    - install_k3s
+- name: play-argocd
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: argo/argo-cd
+    release_namespace: argo-cd
+    kubeconfig: /etc/rancher/k3s/k3s.yaml
+    create_namespace: true
+    values: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/../files/values.argocd.yaml') | from_yaml }}"
+  when:
+    - install_argocd
+    - install_k3s
+
+- name: copy argocd traefik route
+  copy:
+    src: "{{ playbook_dir }}/../files/argocd-traefik-route.yml"
+    dest: "/tmp/argocd-traefik-route.yml"
+
+- name: Wait for traefik to be healthy
+  uri:
+    url: "http://depishev.ddns.net/ping"
+    method: GET
+    status_code: 200
+    timeout: 5
+  register: traefik_health
+  until: traefik_health.status == 200
+  retries: 30
+  delay: 2
+
+- name: Apply argocd traefik route
+  shell: KUBECONFIG=/etc/rancher/k3s/k3s.yaml k3s kubectl apply -f /tmp/tmp/argocd-traefik-route.yml
+  when: traefik_health is succeeded

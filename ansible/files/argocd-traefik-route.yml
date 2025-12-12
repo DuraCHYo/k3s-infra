@@ -1,0 +1,19 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argo-cd-traefik-web-secure-ingress-route
+  namespace: argo-cd
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`argocd.depishev.ddns.net`)
+      kind: Rule
+      services:
+        - name: argocd-server
+          port: 80
+      middlewares:
+        - name: redirect-to-https
+          namespace: traefik
+  tls:
+      certResolver: le
