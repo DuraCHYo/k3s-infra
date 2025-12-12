@@ -51,7 +51,7 @@
     timeout: 5
   register: traefik_health
   until: traefik_health.status == 200
-  retries: 45
+  retries: 150
   delay: 2
 
 - name: Apply argocd traefik route
