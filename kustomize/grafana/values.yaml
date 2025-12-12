@@ -1679,8 +1679,6 @@ extraObjects:
           middlewares:
             - name: redirect-to-https
               namespace: traefik
-            - name: dashboard-auth
-              namespace: traefik
       tls:
         certResolver: le
 # Examples:
