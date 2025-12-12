@@ -219,8 +219,8 @@ ingressRoute:
     entryPoints: ["websecure"]
     # -- Additional ingressRoute middlewares (e.g. for authentication)
     middlewares:
-      - redirect-to-https
-      - dashboard-auth
+      - name: redirect-to-https
+      - name: dashboard-auth
     # -- TLS options (e.g. secret containing certificate)
     tls:
       certResolver: le
