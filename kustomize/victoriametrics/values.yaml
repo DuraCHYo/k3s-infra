@@ -20,7 +20,7 @@ tenant: "0"
 # -- If this chart is used in "Argocd" with "releaseName" field then
 # VMServiceScrapes couldn't select the proper services.
 # For correct working need set value 'argocdReleaseOverride=$ARGOCD_APP_NAME'
-argocdReleaseOverride: "$ARGOCD_APP_NAME"
+argocdReleaseOverride: "victoria-metrics"
 vmalert:
   enabled: false
 alertmanager:
