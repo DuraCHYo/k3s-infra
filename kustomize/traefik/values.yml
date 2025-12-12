@@ -160,13 +160,13 @@ gateway:
     web:
       port: 8000
       protocol: HTTP
-      hostname: ""
+      hostname: "*.depishev.ddns.net"
       namespacePolicy:
         from: All
 #    websecure:
 #      port: 8443
 #      protocol: HTTPS
-#      hostname: vmsingle.depishev.ddns.net
+#      hostname: "*.depishev.ddns.net"
 #      namespacePolicy:
 #        from: All
 #      certificateRefs:
