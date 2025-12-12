@@ -3,11 +3,11 @@ kind: Kustomization
 metadata:
   name: victoria-metrics
 helmCharts:
-- name: victoria-metrics-single
+- name: victoria-metrics-k8s-stack
   repo: https://victoriametrics.github.io/helm-charts/
   releaseName: victoria-metrics
   namespace: monitoring
-  version: 0.26.0
+  version: 0.65.1
   valuesFile: values.yaml
   valuesMerge: merge
   includeCRDs: true
