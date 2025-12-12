@@ -490,3 +490,17 @@ extraObjects:
               namespace: traefik
       tls:
         certResolver: le
+  - apiVersion: operator.victoriametrics.com/v1beta1
+    kind: VMPodScrape
+    metadata:
+      name: traefik-metrics
+      namespace: traefik
+    spec:
+      podMetricsEndpoints:
+        - port: metrics
+          scheme: http
+      namespaceSelector:
+        any: true
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: traefik
