@@ -169,7 +169,7 @@ gateway:
       hostname: vmsingle.depishev.ddns.net
       namespacePolicy:
         from: monitoring
-      tls:
+      certificateRefs:
         certResolver: le
 
 gatewayClass:  # @schema additionalProperties: false
@@ -912,7 +912,7 @@ ports:
     tls:
       enabled: true
       options: ""
-      certResolver: ""
+      certResolver: "le"
       domains: []
     # -- One can apply Middlewares on an entrypoint
     # https://doc.traefik.io/traefik/middlewares/overview/
