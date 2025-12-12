@@ -58,7 +58,7 @@ defaultDashboards:
   # -- Create dashboards as ConfigMap despite dependency it requires is not installed
   dashboards:
     victoriametrics-vmalert:
-      enabled: true
+      enabled: false
     victoriametrics-operator:
       enabled: true
     # -- In ArgoCD using client-side apply this dashboard reaches annotations size limit and causes k8s issues without server side apply
@@ -70,7 +70,7 @@ defaultDashboards:
 defaultRules:
   # -- Labels, which are used for grouping results of the queries. Note that these labels are joined with `.Values.global.clusterLabel`
   additionalGroupByLabels: []
-  create: true
+  create: false
 
   # -- Common properties for VMRule groups
   group:
