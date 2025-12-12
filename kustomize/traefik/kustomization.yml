@@ -8,6 +8,6 @@ helmCharts:
   releaseName: traefik
   namespace: traefik
   version: 37.4.0
-  valuesFile: ./traefik.values.yml
+  valuesFile: values.yml
   valuesMerge: merge
   includeCRDs: true
