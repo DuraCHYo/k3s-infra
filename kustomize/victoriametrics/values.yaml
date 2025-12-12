@@ -915,7 +915,7 @@ extraObjects:
     kind: IngressRoute
     metadata:
       name: grafana-traefik-web-secure-ingress-route
-      namespace: argo-cd
+      namespace: monitoring
     spec:
       entryPoints:
         - websecure
