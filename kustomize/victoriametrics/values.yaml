@@ -197,6 +197,26 @@ defaultDatasources:
 # -- Grafana dependency chart configuration. For possible values refer [here](https://github.com/grafana/helm-charts/tree/main/charts/grafana#configuration)
 grafana:
   enabled: true
+  persistence:
+    type: pvc
+    enabled: true
+    # storageClassName: default
+    ## (Optional) Use this to bind the claim to an existing PersistentVolume (PV) by name.
+    volumeName: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+    # annotations: {}
+    finalizers:
+      - kubernetes.io/pvc-protection
+    # selectorLabels: {}
+    ## Sub-directory of the PV to mount. Can be templated.
+    # subPath: ""
+    ## Name of an existing PVC. Can be templated.
+    # existingClaim:
+    ## Extra labels to apply to a PVC.
+    extraPvcLabels: { }
+    disableWarning: false
   # all values for grafana helm chart can be specified here
   sidecar:
     datasources:
