@@ -20,7 +20,7 @@ tenant: "0"
 # -- If this chart is used in "Argocd" with "releaseName" field then
 # VMServiceScrapes couldn't select the proper services.
 # For correct working need set value 'argocdReleaseOverride=$ARGOCD_APP_NAME'
-argocdReleaseOverride: ""
+argocdReleaseOverride: "$ARGOCD_APP_NAME"
 vmalert:
   enabled: false
 alertmanager:
@@ -72,206 +72,6 @@ defaultRules:
   additionalGroupByLabels: []
   create: false
 
-  # -- Common properties for VMRule groups
-  group:
-    spec:
-      # -- Optional HTTP URL parameters added to each rule request
-      params: {}
-
-  # -- Common properties for all VMRules
-  rule:
-    spec:
-      # -- Additional labels for all VMRules
-      labels: {}
-      # -- Additional annotations for all VMRules
-      annotations: {}
-
-  # -- Common properties for VMRules alerts
-  alerting:
-    spec:
-      # -- Additional labels for VMRule alerts
-      labels: {}
-      # -- Additional annotations for VMRule alerts
-      annotations: {}
-
-  # -- Common properties for VMRules recording rules
-  recording:
-    spec:
-      # -- Additional labels for VMRule recording rules
-      labels: {}
-      # -- Additional annotations for VMRule recording rules
-      annotations: {}
-
-  # -- Per rule properties
-  rules: {}
-    # CPUThrottlingHigh:
-    #   create: true
-    #   spec:
-    #     for: 15m
-    #     labels:
-    #       severity: critical
-  # -- Rule group properties
-  groups:
-    etcd:
-      create: true
-      # -- Common properties for all rules in a group
-      rules: {}
-      # spec:
-      #   annotations:
-      #     dashboard: https://example.com/dashboard/1
-    general:
-      create: true
-      rules: {}
-    k8sContainerCpuLimits:
-      create: true
-      rules: {}
-    k8sContainerCpuRequests:
-      create: true
-      rules: {}
-    k8sContainerCpuUsageSecondsTotal:
-      create: true
-      rules: {}
-    k8sContainerMemoryLimits:
-      create: true
-      rules: {}
-    k8sContainerMemoryRequests:
-      create: true
-      rules: {}
-    k8sContainerMemoryRss:
-      create: true
-      rules: {}
-    k8sContainerMemoryCache:
-      create: true
-      rules: {}
-    k8sContainerMemoryWorkingSetBytes:
-      create: true
-      rules: {}
-    k8sContainerMemorySwap:
-      create: true
-      rules: {}
-    k8sPodOwner:
-      create: true
-      rules: {}
-    k8sContainerResource:
-      create: true
-      rules: {}
-    kubeApiserver:
-      create: true
-      rules: {}
-    kubeApiserverAvailability:
-      create: true
-      rules: {}
-    kubeApiserverBurnrate:
-      create: true
-      rules: {}
-    kubeApiserverHistogram:
-      create: true
-      rules: {}
-    kubeApiserverSlos:
-      create: true
-      rules: {}
-    kubelet:
-      create: true
-      rules: {}
-    kubePrometheusGeneral:
-      create: true
-      rules: {}
-    kubePrometheusNodeRecording:
-      create: true
-      rules: {}
-    kubernetesApps:
-      create: true
-      rules: {}
-      targetNamespace: ".*"
-    kubernetesResources:
-      create: true
-      rules: {}
-    kubernetesStorage:
-      create: true
-      rules: {}
-      targetNamespace: ".*"
-    kubernetesSystem:
-      create: true
-      rules: {}
-    kubernetesSystemKubelet:
-      create: true
-      rules: {}
-    kubernetesSystemApiserver:
-      create: true
-      rules: {}
-    kubernetesSystemControllerManager:
-      create: true
-      rules: {}
-    kubeScheduler:
-      create: true
-      rules: {}
-    kubernetesSystemScheduler:
-      create: true
-      rules: {}
-    kubeStateMetrics:
-      create: true
-      rules: {}
-    nodeNetwork:
-      create: true
-      rules: {}
-    node:
-      create: true
-      rules: {}
-    vmagent:
-      create: true
-      rules: {}
-    vmsingle:
-      create: true
-      rules: {}
-    vmcluster:
-      create: true
-      rules: {}
-    vmHealth:
-      create: true
-      rules: {}
-    vmoperator:
-      create: true
-      rules: {}
-    alertmanager:
-      create: true
-      rules: {}
-
-  # -- Runbook url prefix for default rules
-  runbookUrl: https://runbooks.prometheus-operator.dev/runbooks
-
-  # -- Labels for default rules
-  labels: {}
-  # -- Annotations for default rules
-  annotations: {}
-
-# -- Provide custom recording or alerting rules to be deployed into the cluster.
-additionalVictoriaMetricsMap:
-#    rule-name:
-#     groups:
-#     - name: my_group
-#       rules:
-#       - record: my_record
-#         expr: 100 * my_record
-
-external:
-  grafana:
-    # -- External Grafana host
-    host: ""
-    # -- External Grafana datasource name
-    datasource: VictoriaMetrics
-  # -- External VM read and write URLs
-  vm:
-    read:
-      url: ""
-      # bearerTokenSecret:
-      #   name: dbaas-read-access-token
-      #   key: bearerToken
-    write:
-      url: ""
-      # bearerTokenSecret:
-      #   name: dbaas-read-access-token
-      #   key: bearerToken
-
 # Configures vmsingle params
 vmsingle:
   # -- VMSingle labels
@@ -296,60 +96,9 @@ vmsingle:
   ingress:
     # -- Enable deployment of ingress for server component
     enabled: false
-    # -- Ingress annotations
-    annotations:
-      {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
-    # -- Ingress extra labels
-    labels: {}
-    # -- Ingress default path
-    path: ""
-    # -- Ingress path type
-    pathType: Prefix
-    # -- Ingress controller class name
-    ingressClassName: ""
-
-    # -- Array of host objects
-    hosts: []
-    #  - vmsingle.domain.com
-    # -- Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
-    extraPaths: []
-    # - path: /*
-    #   pathType: Prefix
-    #   backend:
-    #     service:
-    #       name: ssl-redirect
-    #       port:
-    #         name: service
-
-    # -- Array of TLS objects
-    tls: []
-    #  - secretName: vmsingle-ingress-tls
-    #    hosts:
-    #      - vmsingle.domain.com
   route:
     # -- Enable deployment of HTTPRoute for server component
     enabled: false
-    # -- HTTPRoute annotations
-    annotations: {}
-    # -- HTTPRoute extra labels
-    labels: {}
-    # -- HTTPGateway objects refs
-    parentRefs: []
-    # -- Array of hostnames
-    hostnames: []
-    # -- Extra rules to prepend to route. This is useful when working with annotation based services.
-    extraRules: []
-    # -- Route port
-    port: '{{ .Values.vmsingle.spec.port }}'
-    # -- Filters for a default rule in HTTPRoute
-    filters: []
-    # -- Matches for a default rule in HTTPRoute
-    matches:
-      - path:
-          type: PathPrefix
-          value: '{{ dig "spec" "extraArgs" "http.pathPrefix" "/" .Values.vmsingle }}'
 
 vmagent:
   # -- Create VMAgent CR
@@ -388,56 +137,11 @@ vmagent:
   # -- (object) VMAgent ingress configuration
   ingress:
     enabled: false
-    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
-    # Values can be templated
-    annotations:
-      {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
-    labels: {}
-    path: ""
-    pathType: Prefix
-
-    hosts:
-      - vmagent.domain.com
-    extraPaths: []
-    # - path: /*
-    #   pathType: Prefix
-    #   backend:
-    #     service:
-    #       name: ssl-redirect
-    #       port:
-    #         name: service
-    tls: []
-    #  - secretName: vmagent-ingress-tls
-    #    hosts:
-    #      - vmagent.domain.com
 
   # -- (object) VMAgent route configuration
   route:
     # -- Enable deployment of HTTPRoute for vmagent component
     enabled: false
-    # -- HTTPRoute annotations
-    annotations: {}
-    # -- HTTPRoute extra labels
-    labels: {}
-    # -- HTTPGateway objects refs
-    parentRefs: []
-    # -- Array of hostnames
-    hostnames: []
-    # -- Extra rules to prepend to route. This is useful when working with annotation based services.
-    extraRules: []
-    # -- Route port
-    port: '{{ .Values.vmagent.spec.port }}'
-    # -- Filters for a default rule in HTTPRoute
-    filters: []
-    # -- Matches for a default rule in HTTPRoute
-    matches:
-      - path:
-          type: PathPrefix
-          value: '{{ dig "spec" "extraArgs" "http.pathPrefix" "/" .Values.vmagent }}'
 
 defaultDatasources:
   grafanaOperator:
@@ -696,75 +400,12 @@ kubeApiServer:
 # Component scraping the kube controller manager
 kubeControllerManager:
   # -- Enable kube controller manager metrics scraping
-  enabled: true
-
-  # -- If your kube controller manager is not deployed as a pod, specify IPs it can be found on
-  endpoints: []
-  # - 10.141.4.22
-  # - 10.141.4.23
-  # - 10.141.4.24
-
-  # If using kubeControllerManager.endpoints only the port and targetPort are used
-  service:
-    # -- Create service for kube controller manager metrics scraping
-    enabled: true
-    # -- Kube controller manager service port
-    port: 10257
-    # -- Kube controller manager service target port
-    targetPort: 10257
-    # -- Kube controller manager service labels
-    labels: {}
-    # -- Kube controller manager service pod selector
-    selector:
-      component: kube-controller-manager
-
-  # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api/#vmservicescrapespec)
-  vmScrape:
-    spec:
-      jobLabel: jobLabel
-      namespaceSelector:
-        matchNames: []
-      endpoints:
-        - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-          # bearerTokenSecret:
-          #   key: ""
-          port: http-metrics
-          scheme: https
-          tlsConfig:
-            caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-            serverName: kubernetes
+  enabled: false
 
 # Component scraping kubeDns. Use either this or coreDns
 kubeDns:
   # -- Enabled KubeDNS metrics scraping
   enabled: false
-  service:
-    # -- Create Service for KubeDNS metrics
-    enabled: false
-    # -- KubeDNS service labels
-    labels: {}
-    # -- KubeDNS service ports
-    ports:
-      dnsmasq:
-        port: 10054
-        targetPort: 10054
-      skydns:
-        port: 10055
-        targetPort: 10055
-    # -- KubeDNS service pods selector
-    selector:
-      k8s-app: kube-dns
-  # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api/#vmservicescrapespec)
-  vmScrape:
-    spec:
-      jobLabel: jobLabel
-      namespaceSelector:
-        matchNames: []
-      endpoints:
-        - port: http-metrics-dnsmasq
-          bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-        - port: http-metrics-skydns
-          bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
 
 # Component scraping coreDns. Use either this or kubeDns
 coreDns:
@@ -796,121 +437,17 @@ coreDns:
 # Component scraping etcd
 kubeEtcd:
   # -- Enabled KubeETCD metrics scraping
-  enabled: true
-
-  # -- If your etcd is not deployed as a pod, specify IPs it can be found on
-  endpoints: []
-  # - 10.141.4.22
-  # - 10.141.4.23
-  # - 10.141.4.24
-
-  # Etcd service. If using kubeEtcd.endpoints only the port and targetPort are used
-  service:
-    # -- Enable service for ETCD metrics scraping
-    enabled: true
-    # -- ETCD service port
-    port: 2379
-    # -- ETCD service target port
-    targetPort: 2379
-    # -- ETCD service labels
-    labels: {}
-    # -- ETCD service pods selector
-    selector:
-      component: etcd
-
-  # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api/#vmservicescrapespec)
-  vmScrape:
-    spec:
-      jobLabel: jobLabel
-      namespaceSelector:
-        matchNames: []
-      endpoints:
-        - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-          # bearerTokenSecret:
-          #   key: ""
-          port: http-metrics
-          scheme: https
-          tlsConfig:
-            caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  enabled: false
 
 # Component scraping kube scheduler
 kubeScheduler:
   # -- Enable KubeScheduler metrics scraping
-  enabled: true
-
-  # -- If your kube scheduler is not deployed as a pod, specify IPs it can be found on
-  endpoints: []
-  # - 10.141.4.22
-  # - 10.141.4.23
-  # - 10.141.4.24
-
-  # If using kubeScheduler.endpoints only the port and targetPort are used
-  service:
-    # -- Enable service for KubeScheduler metrics scrape
-    enabled: true
-    # -- KubeScheduler service port
-    port: 10259
-    # -- KubeScheduler service target port
-    targetPort: 10259
-    # -- KubeScheduler service labels
-    labels: {}
-    # -- KubeScheduler service pod selector
-    selector:
-      component: kube-scheduler
-
-  # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api/#vmservicescrapespec)
-  vmScrape:
-    spec:
-      jobLabel: jobLabel
-      namespaceSelector:
-        matchNames: []
-      endpoints:
-        - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-          # bearerTokenSecret:
-          #   key: ""
-          port: http-metrics
-          scheme: https
-          tlsConfig:
-            caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  enabled: false
 
 # Component scraping kube proxy
 kubeProxy:
   # -- Enable kube proxy metrics scraping
   enabled: false
-
-  # -- If your kube proxy is not deployed as a pod, specify IPs it can be found on
-  endpoints: []
-  # - 10.141.4.22
-  # - 10.141.4.23
-  # - 10.141.4.24
-
-  service:
-    # -- Enable service for kube proxy metrics scraping
-    enabled: true
-    # -- Kube proxy service port
-    port: 10249
-    # -- Kube proxy service target port
-    targetPort: 10249
-    # -- Kube proxy service labels
-    labels: {}
-    # -- Kube proxy service pod selector
-    selector:
-      k8s-app: kube-proxy
-
-  # -- Spec for VMServiceScrape CRD is [here](https://docs.victoriametrics.com/operator/api/#vmservicescrapespec)
-  vmScrape:
-    spec:
-      jobLabel: jobLabel
-      namespaceSelector:
-        matchNames: []
-      endpoints:
-        - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-          # bearerTokenSecret:
-          #   key: ""
-          port: http-metrics
-          scheme: https
-          tlsConfig:
-            caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 
 # -- Add extra objects dynamically to this chart
 extraObjects:
