@@ -590,22 +590,23 @@ verticalPodAutoscaler:
 
 # Extra manifests to deploy as an array
 extraManifests:
-  - apiVersion: operator.victoriametrics.com/v1beta1
+  - | 
+    apiVersion: operator.victoriametrics.com/v1beta1
     kind: VMServiceScrape
     metadata:
       name: node-exporter
       namespace: monitoring
     spec:
       endpoints:
-        - name: metrics
+        - name: "metrics"
           port: 9100
           interval: 15s
       namespaceSelector:
         any: true
       selector:
         matchLabels:
-          app.kubernetes.io/instance: node-exporter
-          app.kubernetes.io/name: prometheus-node-exporter
+          app.kubernetes.io/instance: "node-exporter"
+          app.kubernetes.io/name: "prometheus-node-exporter"
   # - |
   #   apiVersion: v1
   #   kind: ConfigMap
