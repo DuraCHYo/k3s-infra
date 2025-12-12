@@ -3,8 +3,26 @@
   hosts: all
   vars_files:
     - ../defaults/main.yml
+  handlers:
+    - name: Include handlers for tasks
+      include_tasks: ../handlers/main.yml
   tasks:
-    - include_tasks: add-charts-repos.yml
+    - name: download helm3
+      get_url:
+        url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+        dest: /tmp/helm-3.sh
+        mode: "0700"
+      register: helm_download_result
+      notify: execute_helm_sh
+      when:
+        - install_argocd
+    - name: add argocd repo
+      kubernetes.core.helm_repository:
+        name: argo
+        repo_url: https://argoproj.github.io/argo-helm
+      when:
+        - install_argocd
+        - install_k3s
     - name: play-argocd
       kubernetes.core.helm:
         name: argocd
@@ -12,7 +30,8 @@
         release_namespace: argo-cd
         kubeconfig: /etc/rancher/k3s/k3s.yaml
         create_namespace: true
-        values: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/../files/values.argocd.yml') | from_yaml }}"
+        values: "{{ lookup('ansible.builtin.file', '{{ playbook_dir }}/../files/values.argocd.yaml') | from_yaml }}"
       when:
         - install_argocd
         - install_k3s
+        - helm_download_result

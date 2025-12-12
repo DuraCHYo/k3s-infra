@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: monitoring
   namespace: argo-cd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   destination:
     namespace: monitoring
@@ -14,4 +16,6 @@ spec:
     path: kustomize/victoriametrics/
     repoURL: https://github.com/DuraCHYo/k3s-infra.git
     targetRevision: master
+  syncPolicy:
+    automated: {}
 

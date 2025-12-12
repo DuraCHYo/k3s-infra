@@ -1,0 +1,7 @@
+- name: all-in-one installation
+  hosts: all
+  become: true
+  tasks:
+    - include_tasks: setup-vm.yml
+    - include_tasks: play-k3s.yml
+    - include_tasks: play-infra.yml

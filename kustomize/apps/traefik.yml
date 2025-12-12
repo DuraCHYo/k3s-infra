@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: traefik
   namespace: argo-cd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   destination:
     namespace: traefik
@@ -14,4 +16,6 @@ spec:
     path: kustomize/traefik/
     repoURL: https://github.com/DuraCHYo/k3s-infra.git
     targetRevision: master
+  syncPolicy:
+    automated: {}
 

@@ -1,0 +1,2 @@
+- name: execute_helm_sh
+  shell: /tmp/helm-3.sh

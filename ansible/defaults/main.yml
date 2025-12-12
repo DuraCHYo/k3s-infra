@@ -1,3 +1,2 @@
-install_traefik: true
 install_argocd: true
 install_k3s: true
