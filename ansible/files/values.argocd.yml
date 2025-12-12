@@ -699,7 +699,7 @@ extraObjects:
       entryPoints:
         - websecure
       routes:
-        - match: Host(`depishev.ddns.net`)
+        - match: Host(`argocd.depishev.ddns.net`)
           kind: Rule
           services:
             - name: argocd-server
@@ -2013,8 +2013,6 @@ server:
   # -- Additional command line arguments to pass to Argo CD server
   extraArgs:
     - --insecure
-    - --rootpath
-    - '/argocd'
 
   # -- Environment variables to pass to Argo CD server
   env: []
