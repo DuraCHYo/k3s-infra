@@ -1,0 +1,17 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argo-cd
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  revisionHistoryLimit: 3
+  source:
+    path: kustomize/monitoring/
+    repoURL: https://github.com/DuraCHYo/k3s-infra.git
+    targetRevision: master
+
