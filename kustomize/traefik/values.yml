@@ -168,7 +168,7 @@ gateway:
       protocol: HTTPS
       hostname: vmsingle.depishev.ddns.net
       namespacePolicy:
-        from: monitoring
+        from: All
       certificateRefs:
         certResolver: le
 
