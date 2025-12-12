@@ -286,7 +286,9 @@ server:
     # -- HTTPRoute extra labels
     labels: {}
     # -- HTTPGateway objects refs
-    parentRefs: [] 
+    parentRefs:
+      - name: traefik
+        namespace: traefik
     # -- Array of hostnames
     hostnames:
       - "vmsingle.depishev.ddns.net"
