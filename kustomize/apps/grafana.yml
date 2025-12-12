@@ -11,7 +11,7 @@ spec:
   project: default
   revisionHistoryLimit: 3
   source:
-    path: kustomize/monitoring/
+    path: kustomize/grafana/
     repoURL: https://github.com/DuraCHYo/k3s-infra.git
     targetRevision: master
 
