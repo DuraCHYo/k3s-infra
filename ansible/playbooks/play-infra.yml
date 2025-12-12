@@ -55,5 +55,5 @@
   delay: 2
 
 - name: Apply argocd traefik route
-  shell: KUBECONFIG=/etc/rancher/k3s/k3s.yaml k3s kubectl apply -f /tmp/tmp/argocd-traefik-route.yml
+  shell: KUBECONFIG=/etc/rancher/k3s/k3s.yaml k3s kubectl apply -f /tmp/argocd-traefik-route.yml
   when: traefik_health is succeeded
