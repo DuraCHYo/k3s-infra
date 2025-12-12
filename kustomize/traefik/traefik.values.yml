@@ -134,7 +134,7 @@ experimental:
     debug: false
   kubernetesGateway:
     # -- Enable traefik experimental GatewayClass CRD
-    enabled: true
+    enabled: false
   # -- Enable experimental plugins
   plugins: {}
   # -- Enable experimental local plugins
