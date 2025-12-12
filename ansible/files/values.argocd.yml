@@ -42,7 +42,7 @@ crds:
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: depishev.ddns.net
+  domain: argocd.depishev.ddns.net
 
   # -- Runtime class name for all components
   runtimeClassName: ""
@@ -704,6 +704,9 @@ extraObjects:
           services:
             - name: argocd-server
               port: 80
+      middlewares:
+        - name: redirect-to-https
+          namespace: traefik
       tls:
         certResolver: le
 #  - apiVersion: "argoproj.io/v1alpha1"
