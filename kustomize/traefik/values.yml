@@ -163,14 +163,14 @@ gateway:
       hostname: ""
       namespacePolicy:
         from: All
-    websecure:
-      port: 8443
-      protocol: HTTPS
-      hostname: vmsingle.depishev.ddns.net
-      namespacePolicy:
-        from: All
-      certificateRefs:
-        certResolver: le
+#    websecure:
+#      port: 8443
+#      protocol: HTTPS
+#      hostname: vmsingle.depishev.ddns.net
+#      namespacePolicy:
+#        from: All
+#      certificateRefs:
+#        certResolver: le
 
 gatewayClass:  # @schema additionalProperties: false
   # -- When providers.kubernetesGateway.enabled and gateway.enabled, deploy a default gatewayClass
