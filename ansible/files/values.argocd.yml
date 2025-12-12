@@ -42,7 +42,7 @@ crds:
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: argocd.depishev
+  domain: depishev.ddns.net
 
   # -- Runtime class name for all components
   runtimeClassName: ""
@@ -1995,7 +1995,10 @@ server:
   imagePullSecrets: []
 
   # -- Additional command line arguments to pass to Argo CD server
-  extraArgs: []
+  extraArgs:
+    - --insecure
+    - --rootpath
+    - '/argocd'
 
   # -- Environment variables to pass to Argo CD server
   env: []
@@ -2412,7 +2415,7 @@ server:
     hostname: ""
 
     # -- The path to Argo CD server
-    path: /
+    path: /argocd
 
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix

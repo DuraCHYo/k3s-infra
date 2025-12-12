@@ -31,3 +31,10 @@
         key: "{{ item }}"
       with_file:
         - ../files/id_rsa.pub
+    - name: upgrade packages
+      apt:
+        upgrade: safe
+    - name: install python3
+      apt:
+        name: python3
+        state: installed
