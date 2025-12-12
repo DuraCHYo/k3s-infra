@@ -703,7 +703,7 @@ extraObjects:
           kind: Rule
           services:
             - name: argocd-server
-              port: 443
+              port: 80
       tls:
         certResolver: le
 #  - apiVersion: "argoproj.io/v1alpha1"
@@ -2012,6 +2012,7 @@ server:
 
   # -- Additional command line arguments to pass to Argo CD server
   extraArgs:
+    - --insecure
     - --rootpath
     - '/argocd'
 
