@@ -689,7 +689,23 @@ configs:
 
 # -- Array of extra K8s manifests to deploy
 ## Note: Supports use of custom Helm templates
-extraObjects: []
+extraObjects:
+  - apiVersion: traefik.io/v1alpha1
+    kind: IngressRoute
+    metadata:
+      name: argo-cd-traefik-web-secure-ingress-route
+      namespace: argo-cd
+    spec:
+      entryPoints:
+        - websecure
+      routes:
+        - match: Host(`depishev.ddns.net`)
+          kind: Rule
+          services:
+            - name: argocd-server
+              port: 80
+      tls:
+        certResolver: le
 #  - apiVersion: "argoproj.io/v1alpha1"
 #    kind: "Application"
 #    metadata:
@@ -2395,7 +2411,7 @@ server:
   # Argo CD server ingress configuration
   ingress:
     # -- Enable an ingress resource for the Argo CD server
-    enabled: true
+    enabled: false
     # -- Specific implementation for ingress controller. One of `generic`, `aws` or `gke`
     ## Additional configuration might be required in related configuration sections
     controller: generic
@@ -2408,14 +2424,14 @@ server:
       # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 
     # -- Defines which ingress controller will implement the resource
-    ingressClassName: "traefik"
+    ingressClassName: ""
 
     # -- Argo CD server hostname
     # @default -- `""` (defaults to global.domain)
     hostname: ""
 
     # -- The path to Argo CD server
-    path: /argocd
+    path: /
 
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
