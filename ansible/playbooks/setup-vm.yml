@@ -1,7 +1,6 @@
 - name: upgrade packages
   apt:
     upgrade: safe
-    update_cache: yes
   ignore_errors: true
 - name: install python3
   apt:
