@@ -45,7 +45,7 @@
 
 - name: Wait for traefik to be healthy
   uri:
-    url: "http://depishev.ddns.net/ping"
+    url: "http://{{ vm_dns_name }}/ping"
     method: GET
     status_code: 200
     timeout: 5
@@ -57,3 +57,15 @@
 - name: Apply argocd traefik route
   shell: KUBECONFIG=/etc/rancher/k3s/k3s.yaml k3s kubectl apply -f /tmp/argocd-traefik-route.yml
   when: traefik_health is succeeded
+
+- name: Wait for grafana to be healthy
+  uri:
+    url: "https://grafana.{{ vm_dns_name }}"
+    method: GET
+    status_code: 200
+    timeout: 5
+    validate_certs: false
+  register: grafana_health
+  until: grafana_health.status == 200
+  retries: 150
+  delay: 2

@@ -1,2 +1,22 @@
 install_argocd: true
 install_k3s: true
+vm_dns_name: depishev.ddns.net
+os_environment:
+  - key: KUBECONFIG
+    value: /etc/rancher/k3s/k3s.yaml
+  - key: K8S_AUTH_KUBECONFIG
+    value: /etc/rancher/k3s/k3s.yaml
+
+apt_python_packages:
+  - python3-pip
+  - python3
+
+pip_packages:
+  - name: kubernetes
+    version: 34.1.0
+  - name: PyYAML
+    version: 6.0.3
+  - name: requests
+    version: 2.32.5
+  - name: urllib3
+    version: 2.3.0

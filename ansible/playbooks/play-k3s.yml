@@ -1,5 +1,5 @@
 - name: install k3s on node
-  shell: curl -sfL https://get.k3s.io | sh -s - server --disable=traefik
+  shell: curl -sfL https://get.k3s.io | sh -s - server --disable=traefik --write-kubeconfig-mode 644
   when: install_k3s
   register: k3s_install
 
@@ -20,3 +20,22 @@
   retries: 12
   delay: 5
   until: k3s_api_check.rc == 0
+- name: Add kubectl alias for k3s kubectl
+  lineinfile:
+    path: /etc/bashrc
+    line: "alias kubectl='k3s kubectl'"
+    regexp: "^alias kubectl='k3s kubectl'$"
+    state: present
+    insertafter: EOF
+    create: True
+- name: Source .bashrc
+  shell: "source /etc/bashrc"
+  args:
+    executable: /bin/bash
+- name: populate /etc/environment
+  lineinfile:
+    path: "/etc/environment"
+    state: present
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value}}"
+  with_items: "{{ os_environment }}"

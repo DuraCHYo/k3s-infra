@@ -7,3 +7,4 @@
     - include_tasks: setup-vm.yml
     - include_tasks: play-k3s.yml
     - include_tasks: play-infra.yml
+    - include_tasks: print-generated-passwords.yml

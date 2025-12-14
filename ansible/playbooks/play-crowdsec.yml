@@ -1,0 +1,7 @@
+- name: add crowdsec repository
+  shell: "curl -s https://install.crowdsec.net | sh"
+  register: crowdsec_repo_add
+- name: install apt package
+  apt:
+    name: crowdsec
+  when: crowdsec_repo_add is succeeded

@@ -1,8 +1,13 @@
 - name: upgrade packages
   apt:
-    upgrade: safe
+    update_cache: true
   ignore_errors: true
-- name: install python3
+- name: install {{ apt_python_packages }} with apt
   apt:
-    name: python3
+    name: "{{ item }}"
     state: present
+  loop: "{{ apt_python_packages }}"
+- name: install required pip packages {{ pip_packages }}
+  pip:
+    name: "{{ item.name }}=={{ item.version }}"
+  loop: "{{ pip_packages }}"

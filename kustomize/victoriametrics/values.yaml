@@ -197,6 +197,7 @@ defaultDatasources:
 # -- Grafana dependency chart configuration. For possible values refer [here](https://github.com/grafana/helm-charts/tree/main/charts/grafana#configuration)
 grafana:
   enabled: true
+  useStatefulSet: true
   persistence:
     type: pvc
     enabled: true
@@ -205,7 +206,7 @@ grafana:
     volumeName: ""
     accessModes:
       - ReadWriteOnce
-    size: 1Gi
+    size: 2Gi
     # annotations: {}
     finalizers:
       - kubernetes.io/pvc-protection

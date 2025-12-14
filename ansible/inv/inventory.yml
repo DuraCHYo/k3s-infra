@@ -1,10 +1,9 @@
 all:
-  hosts:
-    depishev.ddns.net:
   children:
     vps_pizza:
       hosts:
         depishev.ddns.net:
+
     admin_setup:
       hosts:
         depishev.ddns.net:
