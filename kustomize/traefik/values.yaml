@@ -771,9 +771,9 @@ additionalArguments:
 #  - "--certificatesresolvers.le.acme.email=dk3315@ya.ru"
 #  - "--certificatesresolvers.le.acme.storage=/data/acme.json"
 #  - "--certificatesresolvers.le.acme.tlschallenge=true"
-  - "--certificatesresolvers.name.acme.dnschallenge=true"
-  - "--certificatesresolvers.name.acme.dnschallenge.provider=cloudns"
-  - "--certificatesresolvers.name.acme.dnschallenge.resolvers=ns74.cloudns.uk,ns73.cloudns.net,ns72.cloudns.com,ns71.cloudns.net"
+  - "--certificatesresolvers.le.acme.dnschallenge=true"
+  - "--certificatesresolvers.le.acme.dnschallenge.provider=cloudns"
+  - "--certificatesresolvers.le.acme.dnschallenge.resolvers=ns74.cloudns.uk,ns73.cloudns.net,ns72.cloudns.com,ns71.cloudns.net"
 #  - "--providers.kubernetesingress.ingressclass=traefik-internal"
 #  - "--log.level=DEBUG"
 
