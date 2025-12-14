@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`argocd.depishev.ddns.net`)
+    - match: Host(`*.depishev.ddns.net`)
       kind: Rule
       services:
         - name: argocd-server
