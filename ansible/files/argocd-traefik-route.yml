@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`argocd.depishev.ddns.net`)
+    - match: Host(`argocd.depishev.abrdns.com`)
       kind: Rule
       services:
         - name: argocd-server
@@ -16,4 +16,8 @@ spec:
         - name: redirect-to-https
           namespace: traefik
   tls:
-      certResolver: le
+    certResolver: le
+    domains:
+      - main: "*.depishev.abrdns.com"
+        sans:
+          - "depishev.abrdns.com"

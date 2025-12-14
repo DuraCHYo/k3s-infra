@@ -15,7 +15,7 @@ spec:
   source:
     path: kustomize/traefik/
     repoURL: https://github.com/DuraCHYo/k3s-infra.git
-    targetRevision: master
+    targetRevision: dev
   syncPolicy:
     automated: {}
     syncOptions:

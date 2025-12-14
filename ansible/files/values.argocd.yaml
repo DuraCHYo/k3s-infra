@@ -690,6 +690,14 @@ configs:
 # -- Array of extra K8s manifests to deploy
 ## Note: Supports use of custom Helm templates
 extraObjects:
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: cloudns-api-auth
+      namespace: traefik
+    data:
+      CLOUDNS_AUTH_ID: ""
+      CLOUDNS_AUTH_PASSWORD: ""
   - apiVersion: "argoproj.io/v1alpha1"
     kind: "Application"
     metadata:
@@ -708,7 +716,7 @@ extraObjects:
           recurse: true
         path: "kustomize/apps/"
         repoURL: "https://github.com/DuraCHYo/k3s-infra.git"
-        targetRevision: "master"
+        targetRevision: "dev"
       syncPolicy:
         automated: {}
   # - apiVersion: secrets-store.csi.x-k8s.io/v1
