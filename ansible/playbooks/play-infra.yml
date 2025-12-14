@@ -26,6 +26,8 @@
   when:
     - install_argocd
     - install_k3s
+- name: create ns traefik
+  shell: kubectl create ns traefik
 - name: play-argocd
   kubernetes.core.helm:
     name: argocd

@@ -42,7 +42,7 @@ crds:
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: argocd.{{ vm_dns_name }}
+  domain: argocd.depishev.lab.com
 
   # -- Runtime class name for all components
   runtimeClassName: ""
@@ -696,8 +696,8 @@ extraObjects:
       name: cloudns-api-auth
       namespace: traefik
     data:
-      CLOUDNS_AUTH_ID: ""
-      CLOUDNS_AUTH_PASSWORD: ""
+      CLOUDNS_AUTH_ID: "NDkzMjIK"
+      CLOUDNS_AUTH_PASSWORD: "TlRKLTdoZC02S2stYmN1"
   - apiVersion: "argoproj.io/v1alpha1"
     kind: "Application"
     metadata:
