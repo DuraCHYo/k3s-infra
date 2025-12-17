@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parser
+  namespace: argo-cd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    namespace:
+    server: https://kubernetes.default.svc
+  project: default
+  revisionHistoryLimit: 3
+  source:
+    path: kustomize/parser/
+    repoURL: https://github.com/DuraCHYo/k3s-infra.git
+    targetRevision: master
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - SelfHeal=true
+

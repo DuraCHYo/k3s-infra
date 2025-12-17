@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: parser
-  namespace: bot
+  namespace: parser
   labels:
     app: parser
 spec:
@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
-                name: bot-secret
+                name: tg-bot-secret
           ports:
             - containerPort: 80
               protocol: TCP
