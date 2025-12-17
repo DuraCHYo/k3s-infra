@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parser
+  namespace: bot
+  labels:
+    app: parser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parser
+  template:
+    metadata:
+      name: parser
+      labels:
+        app: parser
+    spec:
+      containers:
+        - name: parser
+          image: docker.io/library/parse-videoshopper:v1.0
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: bot-secret
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
