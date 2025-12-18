@@ -1,4 +1,2 @@
 .idea
 ansible/defaults/secret_creds.yaml
-kustomize/parser/secret.yaml
-parser/.env
