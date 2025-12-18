@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: parser
-          image: docker.io/library/parse-videoshopper:v1.0
+          image: dealfa/video-shoper-parser:v1.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /etc/localtime
