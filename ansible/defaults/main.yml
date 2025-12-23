@@ -14,8 +14,6 @@ apt_python_packages:
 pip_packages:
   - name: kubernetes
     version: 34.1.0
-  - name: pyyaml
-    version: 6.0.3
   - name: requests
     version: 2.32.5
   - name: urllib3
