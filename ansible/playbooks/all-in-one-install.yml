@@ -1,10 +1,10 @@
 - name: all-in-one installation
-  hosts: vps_pizza
+  hosts: all
   become: true
   vars_files:
     - ../defaults/main.yml
   tasks:
-    - include_tasks: setup-vm.yml
+#    - include_tasks: setup-vm.yml
     - include_tasks: play-k3s.yml
-    - include_tasks: play-infra.yml
-    - include_tasks: print-generated-passwords.yml
+#    - include_tasks: play-infra.yml
+#    - include_tasks: print-generated-passwords.yml
