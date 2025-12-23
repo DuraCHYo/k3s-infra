@@ -8,6 +8,7 @@
     state: present
   loop: "{{ apt_python_packages }}"
 - name: install required pip packages {{ pip_packages }}
-  pip:
-    name: "{{ item.name }}=={{ item.version }}"
+  apt:
+    name: "python3-{{ item.name }}"
+    state: present
   loop: "{{ pip_packages }}"

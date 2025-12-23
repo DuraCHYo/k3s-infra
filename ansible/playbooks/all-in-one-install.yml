@@ -1,5 +1,5 @@
 - name: all-in-one installation
-  hosts: vps_pizza
+  hosts: all
   become: true
   vars_files:
     - ../defaults/main.yml
